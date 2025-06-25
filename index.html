@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pencarian Buku</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  
+ 
+ <p> <input type="" id="searchInput" placeholder="Search" /></p>
+  <div class="search-bar">
+    <label><input type="radio" name="filter" value="title" checked /> Title</label>
+    <label><input type="radio" name="filter" value="author" /> Author</label>
+    <label><input type="radio" name="filter" value="publisher" /> Publisher</label>
+    <label><input type="radio" name="filter" value="titleYear" /> Title & Year</label>
+
+   
+    <input type="number" id="yearInput" placeholder="Tahun" />
+  </div>
+
+  <div class="book-container" id="bookContainer"></div>
+
+  <script>
+    const books = [
+      { title: "Menguasai Pemrograman Berorientasi Objek", author: "Ade Rahmat Iskandar", publisher: "Informatika", year: 2020, img: "image/menguasai pbo.jpg"},
+      { title: "Dasar-Dasar Pemrograman dengan .NET", author: "Ade Rahmat Iskandar", publisher: "Informatika", year: 2019, img: "image/Pemrograman net.jpg" },
+      { title: "Metodologi Pengembangan Sistem Informasi", author: "Samidi Sarsosa", publisher: "Indeks", year: 2017, img: "image/Sistem informasi.jpg" },
+      { title: "Dasar Pemrograman Python 3", author: "Abdul Kadir", publisher: "Andi Publisher", year: 2018, img: "image/Python 3.jpg" },
+      { title: "Struktur Data", author: "Resa A.S", publisher: "Modula", year: 2018, img: "image/Struktur Data.jpg" },
+      { title: "Teori Dan Praktik Sistem Operasi", author: "Roni Hermawan Ma'arif", publisher: "Deepublish", year: 2018, img: "image/Sistem Operasi.jpg" },
+    ];
+
+    const searchInput = document.getElementById('searchInput');
+    const yearInput = document.getElementById('yearInput');
+    const bookContainer = document.getElementById('bookContainer');
+    const radioButtons = document.querySelectorAll('input[name="filter"]');
+
+    function renderBooks(data) {
+      bookContainer.innerHTML = "";
+      if (data.length === 0) {
+        bookContainer.innerHTML = "<p>Tidak ditemukan buku.</p>";
+        return;
+      }
+      data.forEach(book => {
+        bookContainer.innerHTML += `
+          <div class="book-card">
+            <img src="${book.img}" alt="${book.title}">
+            <div class="book-title">${book.title}</div>
+            <div class="book-meta">${book.author}</div>
+            <div class="book-meta">${book.publisher} ${book.year}</div>
+          </div>`;
+      });
+    }
+
+    function filterBooks() {
+      const keyword = searchInput.value.toLowerCase();
+      const year = parseInt(yearInput.value);
+      const selected = document.querySelector('input[name="filter"]:checked').value;
+
+      let filtered = books.filter(book => {
+        if (selected === "title") {
+          return book.title.toLowerCase().includes(keyword);
+        } else if (selected === "author") {
+          return book.author.toLowerCase().includes(keyword);
+        } else if (selected === "publisher") {
+          return book.publisher.toLowerCase().includes(keyword);
+        } else if (selected === "titleYear") {
+          return book.title.toLowerCase().includes(keyword) && book.year === year;
+        }
+        return true;
+      });
+
+      renderBooks(filtered);
+    }
+
+    searchInput.addEventListener('input', filterBooks);
+    yearInput.addEventListener('input', filterBooks);
+    radioButtons.forEach(rb => rb.addEventListener('change', filterBooks));
+
+    // Awal tampilkan semua
+    renderBooks(books);
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f8f8f8;
+  padding: 20px;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.search-bar input[type="text"],
+.search-bar input[type="number"] {
+  padding: 5px;
+  margin-left: 10px;
+  width: 200px;
+}
+
+.book-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.book-card {
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  width: 200px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.book-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.book-title {
+  font-weight: bold;
+  margin: 10px 0 5px 0;
+}
+
+.book-meta {
+  font-size: 0.9em;
+  color: gray;
+}
